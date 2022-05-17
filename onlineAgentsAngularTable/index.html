@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="widget">
+
+<head>
+    <!-- AngularJS Material CSS using GitCDN -->
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/master/angular-material.css">
+    <!-- Angular-Toasty CSS using GitCDN -->
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/repo/gcareri/angular-toasty/master/dist/angular-toasty.css">
+
+    <link rel="stylesheet" href="https://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+</head>
+
+<body>
+    <!-- AngularJS Material Dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-cookies.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+    <!-- AngularJS Material Javascript using GitCDN -->
+    <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/master/angular-material.js"></script>
+    <!-- Angular-Toasty using GitCDN -->
+    <script src="https://cdn.gitcdn.link/repo/gcareri/angular-toasty/master/dist/angular-toasty.min.js"></script>
+
+    <script src="https://rawgit.com/daniel-nagy/md-data-table/master/dist/md-data-table.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+    <script src="index.js"></script>
+
+    <div ng-controller="widgetController as vm" id="widgetCard" layout="column" ng-cloak class="md-inline-form">
+        <toasty></toasty>
+        <md-content class="md-padding" layout-align="center center">
+
+            <div class="flexbox-parent md-padding" layout="column">
+
+                <md-card class="md-padding">
+                                    <md-table-container>
+                                        <table md-table>
+                                            <thead md-head md-order="vm.query.order">
+                                                <tr md-row>
+                                                    <th md-column md-row ng-repeat="param in vm.params">{{param.alias}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody md-body>
+                                                <tr md-row ng-hide="vm.data.count">
+                                                    <td md-cell colspan="{{vm.params.length}}">
+                                                        <div layout="row" layout-align="center center">
+                                                            <span>No Data Available</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr md-row ng-repeat="row in vm.data.rows | limitTo: vm.query.limit: (vm.query.page - 1) * vm.query.limit">
+                                                    <td md-cell ng-repeat="param in vm.params">{{row[param.column]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </md-table-container>
+
+                                    <md-table-pagination md-label="{page: 'Page:', rowsPerPage: 'Rows per page:', of: 'Of'}" md-limit="vm.query.limit" md-limit-options="[10, 15, 20, 50, 100, 250]" md-page="vm.query.page"
+                                        md-total="{{vm.data.count}}" md-page-select></md-table-pagination>
+                </md-card>
+            </div>
+        </md-content>
+
+    </div>
+</body>
+
+</html>
